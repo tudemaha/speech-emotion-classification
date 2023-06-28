@@ -28,5 +28,5 @@ def show_random_plot(df):
 
     plt.suptitle(df.Path[index], size = 14)
     plt.tight_layout()
-
+    
     st.pyplot(fig)

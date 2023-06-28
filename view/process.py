@@ -1,7 +1,11 @@
 import streamlit as st
+import math
+import random
+
 from controller.df_dataset import dataset_df
 from controller.dataset_spread import distribution
 from controller.show_audio import show_random_plot
+from controller.mfcc import create_mfcc, resize_mfcc, show_mfcc
 
 # title for the web
 title = 'Machine Modeling - Speech Emotion Classification'
@@ -32,3 +36,17 @@ st.write("#### Happy")
 show_random_plot(happy_df)
 st.write("#### Sad")
 show_random_plot(sad_df)
+
+mfccs = create_mfcc(df)
+new_mfccs = []
+sum = 0
+
+st.write("#### Average MFCCs Column")
+for mfcc in mfccs:
+    new_mfccs.append(resize_mfcc(mfcc))
+    sum += mfcc.shape[1]
+st.write(math.ceil(sum / 1600))
+
+index = random.randint(0, df.shape[0])
+st.write("#### MFCC Comparison")
+show_mfcc(df.Path[index], new_mfccs[index])
