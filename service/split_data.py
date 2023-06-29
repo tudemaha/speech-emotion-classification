@@ -1,6 +1,5 @@
 from sklearn.model_selection import train_test_split
 import numpy as np
-import streamlit as st
 
 def make_train_test_split(x, y):
     y["Label"].replace({"sad": 0, "happy": 1}, inplace = True)

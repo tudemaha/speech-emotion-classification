@@ -1,6 +1,5 @@
 from tensorflow import keras
 from keras.layers import (Conv2D, BatchNormalization, Dropout, Flatten, Dense, MaxPool2D)
-from keras import initializers
 
 def create_model(x_tr):
     model = keras.Sequential()
