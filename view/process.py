@@ -22,16 +22,21 @@ st.set_page_config(layout='wide', page_title=title, menu_items={
     """
 })
 
-st.title("Machine Modeling")
+st.session_state["preprocessing"] = False
+st.session_state["train"] = False
+st.session_state["test"] = False
 
-st.write("### Training Dataset")
-df = dataset_df('dataset')
-st.dataframe(df, 500)
+def start():
+    st.title("Machine Modeling")
 
-st.write("Datased have been loaded, let's preprocess them!")
-st.write(st.session_state)
-st.button('Preprocessing', key = 'preprocessing')
+    st.write("### Training Dataset")
+    global df
+    df = dataset_df('dataset')
+    st.dataframe(df, 500)
 
+    st.write("Dataset have been loaded, let's preprocess them!")
+    st.session_state["preprocessing"] = st.button("Preprocessing")
+    
 def preprocessing():
     st.write("### Sample Distribution")
     distribution(df)
@@ -46,27 +51,53 @@ def preprocessing():
     show_random_plot(sad_df)
 
     mfccs = create_mfcc(df)
+    global new_mfccs
     new_mfccs = []
     sum = 0
 
-    st.write("#### Average MFCCs Column")
+    st.write("### Average MFCCs Column")
     for mfcc in mfccs:
         new_mfccs.append(resize_mfcc(mfcc))
         sum += mfcc.shape[1]
     st.write(math.ceil(sum / 1600))
 
     index = random.randint(0, df.shape[0])
-    st.write("#### MFCC Comparison")
+    st.write("### MFCC Comparison")
     show_mfcc(df.Path[index], new_mfccs[index])
 
-# x_tr, y_tr, x_va, y_va, x_te, y_te = make_train_test_split(new_mfccs, df)
+    st.write("The dataset have been preprocessed, let's train them using CNN!")
+    st.session_state["train"] = st.button("Training")
 
-# st.write("#### Training Process")
-# trained_model, history = train(x_tr, y_tr, x_va, y_va)
-# plot_history(history)
+def start_train():
+    global x_te, y_te
+    global trained_model
 
-# st.write("#### Testing Process")
-# test(trained_model, x_te, y_te)
+    x_tr, y_tr, x_va, y_va, x_te, y_te = make_train_test_split(new_mfccs, df)
 
-# st.write("### Confusion Matrix")
-# plot_confusion_matrix(trained_model, x_te, y_te)
+    st.write("#### Training Process")
+    trained_model, history = train(x_tr, y_tr, x_va, y_va)
+    plot_history(history)
+
+    st.write("Training model fisinh, let's check the accuration with testing dataset!")
+    st.session_state["test"] = st.button("Test")
+
+def start_test():
+    st.write("#### Testing Process")
+    test(trained_model, x_te, y_te)
+
+    st.write("### Confusion Matrix")
+    plot_confusion_matrix(trained_model, x_te, y_te)
+
+if __name__ == "__main__":
+    start()
+
+if st.session_state["preprocessing"]:
+    preprocessing()
+
+if st.session_state["train"]:
+    start_train()
+
+if st.session_state["test"]:
+    start_test()
+
+st.write(st.session_state)
