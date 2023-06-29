@@ -15,9 +15,9 @@ def create_mfcc(df):
     return mfccs
 
 def resize_mfcc(array):
-    new_mfcc = np.zeros((30, 80))
+    new_mfcc = np.zeros((30, 100))
     for i in range(30):
-        for j in range(80):
+        for j in range(100):
             try:
                 new_mfcc[i][j] = array[i][j]
             except IndexError:

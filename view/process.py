@@ -6,6 +6,8 @@ from controller.df_dataset import dataset_df
 from controller.dataset_spread import distribution
 from controller.show_audio import show_random_plot
 from controller.mfcc import create_mfcc, resize_mfcc, show_mfcc
+from service.split_data import make_train_test_split
+from controller.cnn_train import train, test, plot_history
 
 # title for the web
 title = 'Machine Modeling - Speech Emotion Classification'
@@ -22,7 +24,7 @@ st.set_page_config(layout='wide', page_title=title, menu_items={
 st.title("Machine Modeling")
 
 st.write("### Training Dataset")
-df = dataset_df('dataset/training')
+df = dataset_df('dataset')
 st.dataframe(df, 500)
 
 st.write("### Sample Distribution")
@@ -50,3 +52,12 @@ st.write(math.ceil(sum / 1600))
 index = random.randint(0, df.shape[0])
 st.write("#### MFCC Comparison")
 show_mfcc(df.Path[index], new_mfccs[index])
+
+x_tr, y_tr, x_va, y_va, x_te, y_te = make_train_test_split(new_mfccs, df)
+
+st.write("#### Training Process")
+trained_model, history = train(x_tr, y_tr, x_va, y_va)
+plot_history(history)
+
+st.write("#### Testing Process")
+test(trained_model, x_te, y_te)
