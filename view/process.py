@@ -83,9 +83,6 @@ def start_test():
     col1, col2, col3, col4, col5 = st.columns(5)
     col1.metric("Loss", "{:.4f}".format(loss))
     col2.metric("Accuracy", "{:.4f}".format(accuracy))
-
-
-    # col1, col2, col3 = st.columns(3)
     col3.metric("Precision", "{:.4f}".format(precision))
     col4.metric("Recall", "{:.4}".format(recall))
     col5.metric("F1", "{:.4}".format(f1))
