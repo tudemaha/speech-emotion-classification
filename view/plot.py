@@ -2,13 +2,11 @@ import pandas as pd
 import numpy as np
 import random
 import librosa
-import matplotlib.pyplot as plt
-from matplotlib.colors import Normalize
-import streamlit as st
-from sklearn.metrics import ConfusionMatrixDisplay
 import seaborn as sns
-
-from controller.cnn import predict
+import streamlit as st
+import matplotlib.pyplot as plt
+from sklearn.metrics import ConfusionMatrixDisplay
+from matplotlib.colors import Normalize
 
 def distribution(dataset):
     fig, ax = plt.subplots(nrows = 1, ncols = 2, figsize = (20, 5))
@@ -80,10 +78,8 @@ def plot_history(history):
 
     st.pyplot(fig)
 
-def plot_confusion_matrix(model, x_te, y_te):
+def confusion_matrix(pred, y_te):
     labels = {"sad": 0, "happy": 1}
-
-    pred = predict(model, x_te)
 
     fig, ax = plt.subplots(nrows = 1, ncols = 2, figsize = (20, 8))
 

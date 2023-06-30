@@ -3,9 +3,9 @@ import random
 
 from controller.df_dataset import dataset_df
 from controller.mfcc import create_mfcc, create_resized_mfcc
-from controller.cnn import train, test
+from controller.cnn import train, test, predict
 from service.split_data import make_train_test_split
-from view.plot import distribution, show_random_plot, plot_confusion_matrix, show_mfcc, plot_history
+from view.plot import distribution, show_random_plot, confusion_matrix, show_mfcc, plot_history
 
 # title for the web
 title = 'Machine Modeling - Speech Emotion Classification'
@@ -65,26 +65,33 @@ def start_train():
 
     x_tr, y_tr, x_va, y_va, x_te, y_te = make_train_test_split(new_mfccs, df)
 
-    st.write("#### MFCCs Distribution")
+    st.write("### MFCCs Distribution")
     col1, col2, col3 = st.columns(3)
     col1.metric("Train", str(x_tr.shape))
     col2.metric("Validation", str(x_va.shape))
     col3.metric("Test", str(x_te.shape))
 
-    st.write("#### Training Process")
+    st.write("### Training Process")
     trained_model, history = train(x_tr, y_tr, x_va, y_va)
     plot_history(history)
 
 def start_test():
-    st.write("#### Testing Process")
+    st.write("### Testing Process")
     loss, accuracy = test(trained_model, x_te, y_te)
+    predictions, precision, recall, f1 = predict(trained_model, x_te, y_te)
 
-    col1, col2 = st.columns(2)
-    col1.metric("Loss", "{:.2f}".format(loss))
-    col2.metric("Accuracy", "{:.2f}%".format(accuracy))
+    col1, col2, col3, col4, col5 = st.columns(5)
+    col1.metric("Loss", "{:.4f}".format(loss))
+    col2.metric("Accuracy", "{:.4f}".format(accuracy))
+
+
+    # col1, col2, col3 = st.columns(3)
+    col3.metric("Precision", "{:.4f}".format(precision))
+    col4.metric("Recall", "{:.4}".format(recall))
+    col5.metric("F1", "{:.4}".format(f1))
 
     st.write("### Confusion Matrix")
-    plot_confusion_matrix(trained_model, x_te, y_te)
+    confusion_matrix(y_te, predictions)
 
 if __name__ == "__main__":
     start()

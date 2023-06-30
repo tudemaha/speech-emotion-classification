@@ -1,5 +1,6 @@
 import numpy as np
 from tensorflow import keras
+from sklearn.metrics import recall_score, precision_score, f1_score
 import streamlit as st
 
 from service.cnn import create_model
@@ -7,7 +8,8 @@ from service.cnn import create_model
 @st.cache_resource
 def train(x_tr, y_tr, x_va, y_va):
     model = create_model(x_tr)
-    model.compile(optimizer = "Adam", loss = "sparse_categorical_crossentropy", metrics = ["accuracy"])
+    optimizer = keras.optimizers.Adam()
+    model.compile(optimizer = optimizer, loss = "sparse_categorical_crossentropy", metrics = ["accuracy"])
 
     earlystopping_cb = keras.callbacks.EarlyStopping(patience = 5)
 
@@ -27,12 +29,15 @@ def test(model, x_te, y_te):
 
     return loss_te, accuracy_te
 
-def predict(model, x_te):
+def predict(model, x_te, y_te):
     predictions = model.predict(x_te)
 
     pred = []
-
     for i in predictions:
         pred.append(np.argmax(i))
+    
+    precision = precision_score(y_te, pred, average = "weighted")
+    recall = recall_score(y_te, pred, average = "weighted")
+    f1 = f1_score(y_te, pred, average = "weighted")
         
-    return pred
+    return pred, precision, recall, f1
