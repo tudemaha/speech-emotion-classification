@@ -36,7 +36,6 @@ def start():
         st.session_state["preprocessing"] = True
     
 def preprocessing():
-    print("ini ngeprint")
     st.write("### Sample Distribution")
     distribution(df)
 
@@ -67,12 +66,10 @@ def start_train():
     x_tr, y_tr, x_va, y_va, x_te, y_te = make_train_test_split(new_mfccs, df)
 
     st.write("#### MFCCs Distribution")
-    training_distribution = {
-        "train": x_tr.shape,
-        "validation": x_va.shape,
-        "test": x_te.shape
-    }
-    st.table(training_distribution)
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Train", str(x_tr.shape))
+    col2.metric("Validation", str(x_va.shape))
+    col3.metric("Test", str(x_te.shape))
 
     st.write("#### Training Process")
     trained_model, history = train(x_tr, y_tr, x_va, y_va)
@@ -83,8 +80,8 @@ def start_test():
     loss, accuracy = test(trained_model, x_te, y_te)
 
     col1, col2 = st.columns(2)
-    col1.metric("Loss", loss)
-    col2.metric("Accuracy", accuracy)
+    col1.metric("Loss", "{:.2f}".format(loss))
+    col2.metric("Accuracy", "{:.2f}%".format(accuracy))
 
     st.write("### Confusion Matrix")
     plot_confusion_matrix(trained_model, x_te, y_te)
@@ -95,7 +92,7 @@ if __name__ == "__main__":
 if st.session_state["preprocessing"]:
     preprocessing()
     st.write("The dataset have been preprocessed, let's train them using CNN!")
-    if st.button("Trainig"):
+    if st.button("Training"):
         st.session_state["train"] = True
 
 if st.session_state["train"]:

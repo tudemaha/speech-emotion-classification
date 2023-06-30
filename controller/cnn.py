@@ -1,3 +1,4 @@
+import numpy as np
 from tensorflow import keras
 import streamlit as st
 
@@ -25,3 +26,13 @@ def test(model, x_te, y_te):
     loss_te, accuracy_te = model.evaluate(x_te, y_te)
 
     return loss_te, accuracy_te
+
+def predict(model, x_te):
+    predictions = model.predict(x_te)
+
+    pred = []
+
+    for i in predictions:
+        pred.append(np.argmax(i))
+        
+    return pred

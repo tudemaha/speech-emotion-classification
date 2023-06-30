@@ -8,7 +8,7 @@ import streamlit as st
 from sklearn.metrics import ConfusionMatrixDisplay
 import seaborn as sns
 
-from service.confucion_matrix import confusion_matrix
+from controller.cnn import predict
 
 def distribution(dataset):
     fig, ax = plt.subplots(nrows = 1, ncols = 2, figsize = (20, 5))
@@ -83,7 +83,7 @@ def plot_history(history):
 def plot_confusion_matrix(model, x_te, y_te):
     labels = {"sad": 0, "happy": 1}
 
-    pred = confusion_matrix(model, x_te)
+    pred = predict(model, x_te)
 
     fig, ax = plt.subplots(nrows = 1, ncols = 2, figsize = (20, 8))
 
