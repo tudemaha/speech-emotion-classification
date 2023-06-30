@@ -1,14 +1,11 @@
 import streamlit as st
-import math
 import random
 
 from controller.df_dataset import dataset_df
-from controller.dataset_spread import distribution
-from controller.show_audio import show_random_plot
-from controller.mfcc import create_mfcc, resize_mfcc, show_mfcc
+from controller.mfcc import create_mfcc, create_resized_mfcc
+from controller.cnn import train, test
 from service.split_data import make_train_test_split
-from controller.cnn_train import train, test, plot_history
-from controller.plot_conf_matrix import plot_confusion_matrix
+from view.plot import distribution, show_random_plot, plot_confusion_matrix, show_mfcc, plot_history
 
 # title for the web
 title = 'Machine Modeling - Speech Emotion Classification'
@@ -22,9 +19,9 @@ st.set_page_config(layout='wide', page_title=title, menu_items={
     """
 })
 
-st.session_state["preprocessing"] = False
-st.session_state["train"] = False
-st.session_state["test"] = False
+if "preprocessing" not in st.session_state: st.session_state["preprocessing"] = False
+if "train" not in st.session_state: st.session_state["train"] = False
+if "test" not in st.session_state: st.session_state["test"] = False
 
 def start():
     st.title("Machine Modeling")
@@ -35,9 +32,11 @@ def start():
     st.dataframe(df, 500)
 
     st.write("Dataset have been loaded, let's preprocess them!")
-    st.session_state["preprocessing"] = st.button("Preprocessing")
+    if st.button("Preprocessing"):
+        st.session_state["preprocessing"] = True
     
 def preprocessing():
+    print("ini ngeprint")
     st.write("### Sample Distribution")
     distribution(df)
 
@@ -52,21 +51,14 @@ def preprocessing():
 
     mfccs = create_mfcc(df)
     global new_mfccs
-    new_mfccs = []
-    sum = 0
+    new_mfccs, average_cols = create_resized_mfcc(mfccs)
 
     st.write("### Average MFCCs Column")
-    for mfcc in mfccs:
-        new_mfccs.append(resize_mfcc(mfcc))
-        sum += mfcc.shape[1]
-    st.write(math.ceil(sum / 1600))
+    st.metric("Average", average_cols)
 
     index = random.randint(0, df.shape[0])
     st.write("### MFCC Comparison")
     show_mfcc(df.Path[index], new_mfccs[index])
-
-    st.write("The dataset have been preprocessed, let's train them using CNN!")
-    st.session_state["train"] = st.button("Training")
 
 def start_train():
     global x_te, y_te
@@ -74,16 +66,25 @@ def start_train():
 
     x_tr, y_tr, x_va, y_va, x_te, y_te = make_train_test_split(new_mfccs, df)
 
+    st.write("#### MFCCs Distribution")
+    training_distribution = {
+        "train": x_tr.shape,
+        "validation": x_va.shape,
+        "test": x_te.shape
+    }
+    st.table(training_distribution)
+
     st.write("#### Training Process")
     trained_model, history = train(x_tr, y_tr, x_va, y_va)
     plot_history(history)
 
-    st.write("Training model fisinh, let's check the accuration with testing dataset!")
-    st.session_state["test"] = st.button("Test")
-
 def start_test():
     st.write("#### Testing Process")
-    test(trained_model, x_te, y_te)
+    loss, accuracy = test(trained_model, x_te, y_te)
+
+    col1, col2 = st.columns(2)
+    col1.metric("Loss", loss)
+    col2.metric("Accuracy", accuracy)
 
     st.write("### Confusion Matrix")
     plot_confusion_matrix(trained_model, x_te, y_te)
@@ -93,11 +94,15 @@ if __name__ == "__main__":
 
 if st.session_state["preprocessing"]:
     preprocessing()
+    st.write("The dataset have been preprocessed, let's train them using CNN!")
+    if st.button("Trainig"):
+        st.session_state["train"] = True
 
 if st.session_state["train"]:
     start_train()
+    st.write("Training model fisinh, let's check the accuration with testing dataset!")
+    if st.button("Testing"):
+        st.session_state["test"] = True
 
 if st.session_state["test"]:
     start_test()
-
-st.write(st.session_state)

@@ -1,9 +1,9 @@
 import numpy as np
+import math
 import librosa
 import streamlit as st
-import matplotlib.pyplot as plt
-from matplotlib.colors import Normalize
 
+@st.cache_data
 def create_mfcc(df):
     mfccs = []
 
@@ -14,6 +14,7 @@ def create_mfcc(df):
     
     return mfccs
 
+@st.cache_resource
 def resize_mfcc(array):
     new_mfcc = np.zeros((30, 100))
     for i in range(30):
@@ -25,17 +26,15 @@ def resize_mfcc(array):
     
     return new_mfcc
 
-def show_mfcc(df_mfcc_path, array_mfcc):
-    fig, ax = plt.subplots(nrows = 1, ncols =  2, figsize = (20, 4))
+@st.cache_data
+def create_resized_mfcc(mfccs):
+    new_mfccs = []
+    sum = 0
 
-    y, sr = librosa.load(df_mfcc_path, sr = 16000)
-    x_mfcc = librosa.feature.mfcc(y = y, sr = sr, n_mfcc = 30)
-    librosa.display.specshow(x_mfcc, sr = sr, x_axis = "time", norm = Normalize(vmin = -50, vmax = 50), ax = ax[0])
-    ax[0].set_title("Before")
+    for mfcc in mfccs:
+        new_mfccs.append(resize_mfcc(mfcc))
+        sum += mfcc.shape[1]
+    
+    averate_column = math.ceil(sum / 1600)
 
-    librosa.display.specshow(array_mfcc, sr = sr, x_axis = "time", norm = Normalize(vmin = -50, vmax = 50), ax = ax[1])
-    ax[1].set_title("After")
-
-    plt.suptitle(df_mfcc_path, size = 14)
-
-    st.pyplot(fig)
+    return new_mfccs, averate_column
