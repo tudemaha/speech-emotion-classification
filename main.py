@@ -1,10 +1,4 @@
-from st_pages import Page, show_pages, add_page_title
+from view.home import start_home
 
-add_page_title()
-
-show_pages(
-    [
-        Page("view/process.py", "Machine Modeling", ":gear:"),
-        Page("view/user.py", "Checking", ":sound:")
-    ]
-)
+if __name__ == "__main__":
+    start_home()

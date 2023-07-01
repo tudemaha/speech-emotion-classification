@@ -10,15 +10,6 @@ from view.plot import distribution, show_random_plot, confusion_matrix, show_mfc
 # title for the web
 title = 'Machine Modeling - Speech Emotion Classification'
 
-# setup the web configuration
-st.set_page_config(layout='wide', page_title=title, menu_items={
-    'About': f"""
-    ### {title}
-    Made with :heart: by Group 1 in Class A  
-    Introduction to Multimedia Data Processing Subject
-    """
-})
-
 if "preprocessing" not in st.session_state: st.session_state["preprocessing"] = False
 if "train" not in st.session_state: st.session_state["train"] = False
 if "test" not in st.session_state: st.session_state["test"] = False

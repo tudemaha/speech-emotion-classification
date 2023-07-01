@@ -26,9 +26,9 @@ def create_audio_mfcc(librosa_audio):
 
 @st.cache_resource
 def resize_mfcc(array):
-    new_mfcc = np.zeros((30, 100))
+    new_mfcc = np.zeros((30, 80))
     for i in range(30):
-        for j in range(100):
+        for j in range(80):
             try:
                 new_mfcc[i][j] = array[i][j]
             except IndexError:
@@ -45,6 +45,6 @@ def create_resized_mfcc(mfccs):
         new_mfccs.append(resize_mfcc(mfcc))
         sum += mfcc.shape[1]
     
-    averate_column = math.ceil(sum / 1600)
+    averate_column = math.ceil(sum / 2000)
 
     return new_mfccs, averate_column
