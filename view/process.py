@@ -22,6 +22,9 @@ st.set_page_config(layout='wide', page_title=title, menu_items={
 if "preprocessing" not in st.session_state: st.session_state["preprocessing"] = False
 if "train" not in st.session_state: st.session_state["train"] = False
 if "test" not in st.session_state: st.session_state["test"] = False
+if "model" not in st.session_state: st.session_state["model"] = False
+if "x_mean" not in st.session_state: st.session_state["x_mean"] = False
+if "x_std" not in st.session_state: st.session_state["x_std"] = False
 
 def start():
     st.title("Machine Modeling")

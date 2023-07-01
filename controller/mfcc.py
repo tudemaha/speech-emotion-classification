@@ -14,6 +14,16 @@ def create_mfcc(df):
     
     return mfccs
 
+@st.cache_data
+def create_audio_mfcc(librosa_audio):
+    mfccs = []
+    
+    for audio in librosa_audio:
+        mfcc = librosa.feature.mfcc(y = audio, sr = 16000, n_mfcc = 30)
+        mfccs.append(mfcc)
+
+    return mfccs
+
 @st.cache_resource
 def resize_mfcc(array):
     new_mfcc = np.zeros((30, 100))

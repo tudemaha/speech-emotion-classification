@@ -19,6 +19,9 @@ def make_train_test_split(x, y):
     tr_mean = np.mean(x_tr, axis = 0)
     tr_std = np.std(x_tr, axis = 0)
 
+    st.session_state["x_mean"] = tr_mean
+    st.session_state["x_std"] = tr_std
+
     x_tr = (x_tr - tr_mean) / tr_std
     x_va = (x_va - tr_mean) / tr_std
     x_te = (x_te - tr_mean) / tr_std

@@ -22,6 +22,7 @@ def train(x_tr, y_tr, x_va, y_va):
         callbacks = [earlystopping_cb]
     )
 
+    st.session_state["model"] = model
     return model, history
 
 def test(model, x_te, y_te):
@@ -29,13 +30,17 @@ def test(model, x_te, y_te):
 
     return loss_te, accuracy_te
 
-def predict(model, x_te, y_te):
+def make_prediction(model, x_te):
     predictions = model.predict(x_te)
 
     pred = []
     for i in predictions:
         pred.append(np.argmax(i))
     
+    return pred
+
+def predict(model, x_te, y_te):
+    pred = make_prediction(model, x_te)
     precision = precision_score(y_te, pred, average = "weighted")
     recall = recall_score(y_te, pred, average = "weighted")
     f1 = f1_score(y_te, pred, average = "weighted")
