@@ -3,10 +3,14 @@ from streamlit_extras.let_it_rain import rain
 from pandas import DataFrame
 
 from controller.checking import checking
+from view.config import get_config
 
-st.title("Let's Check Your Emotion!")
+get_config("Checking")
 
 def start():
+    st.write("<h1 style='text-align: center;'>Let's Check Your Emotion!</h1>", unsafe_allow_html = True)
+
+
     instructions = """
     Instructions:
     1. Prepare your files
@@ -42,7 +46,10 @@ def start():
             result_df = DataFrame(result, columns = ["Filename", "Emotion"])
             st.dataframe(result_df, 400)
 
-    
+def show_warning():
+    st.warning("Model not created yet! Go to \"Machine Modeling\" page, do preprocessing, training, and testing.", icon = "⚠️")
 
-if __name__ == "__main__":
+if st.session_state["test"]:
     start()
+else:
+    show_warning()

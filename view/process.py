@@ -6,9 +6,9 @@ from controller.mfcc import create_mfcc, create_resized_mfcc
 from controller.cnn import train, test, predict
 from service.split_data import make_train_test_split
 from view.plot import distribution, show_random_plot, confusion_matrix, show_mfcc, plot_history
+from view.config import get_config
 
-# title for the web
-title = 'Machine Modeling - Speech Emotion Classification'
+get_config("Machine Modeling")
 
 if "preprocessing" not in st.session_state: st.session_state["preprocessing"] = False
 if "train" not in st.session_state: st.session_state["train"] = False
@@ -18,7 +18,7 @@ if "x_mean" not in st.session_state: st.session_state["x_mean"] = False
 if "x_std" not in st.session_state: st.session_state["x_std"] = False
 
 def start():
-    st.title("Machine Modeling")
+    st.write("<h1 style='text-align: center;'>Machine Modeling</h1>", unsafe_allow_html = True)
 
     st.write("### Training Dataset")
     global df
@@ -26,7 +26,7 @@ def start():
     st.dataframe(df, 500)
 
     st.write("Dataset have been loaded, let's preprocess them!")
-    if st.button("Preprocessing"):
+    if st.button("Preprocessing", type = "primary"):
         st.session_state["preprocessing"] = True
     
 def preprocessing():
@@ -90,13 +90,13 @@ if __name__ == "__main__":
 if st.session_state["preprocessing"]:
     preprocessing()
     st.write("The dataset have been preprocessed, let's train them using CNN!")
-    if st.button("Training"):
+    if st.button("Training", type = "primary"):
         st.session_state["train"] = True
 
 if st.session_state["train"]:
     start_train()
     st.write("Training model fisinh, let's check the accuration with testing dataset!")
-    if st.button("Testing"):
+    if st.button("Testing", type = "primary"):
         st.session_state["test"] = True
 
 if st.session_state["test"]:

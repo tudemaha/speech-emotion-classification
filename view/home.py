@@ -7,7 +7,7 @@ def start_home():
     get_config("Home")
 
     render_page = open("view/index.html")
-    components.html(render_page.read(), height = 1700)
+    components.html(render_page.read(), height = 1940)
 
     show_pages(
         [

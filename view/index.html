@@ -25,13 +25,14 @@
         border-color: white;
         color: #adb5bd;
       }
-      .custom-table tbody tr:nth-child(even) {
+      .specs-item {
         background-color: #262730;
-        border-color: white;
-        color: #adb5bd;
+        color: white;
       }
-      .list-group-item {
-        background-color: #262730;
+      .use-item {
+        background-color: #0e1117;
+        border-color: #0e1117;
+        color: white;
       }
     </style>
   </head>
@@ -50,7 +51,7 @@
     <section class="mt-5">
       <p class="fs-4 fw-bold text-center">Model Specification</p>
       <div class="row justify-content-center">
-        <div class="col-md-7">
+        <div class="col-md-8">
           <table class="table custom-table">
             <thead>
               <tr>
@@ -130,30 +131,59 @@
 
           <ul class="list-group" data-bs-theme="dark">
             <li
-              class="list-group-item justify-content-between align-items-center d-flex"
+              class="list-group-item justify-content-between align-items-center d-flex specs-item"
+            >
+              Type
+              <span class="badge bg-danger rounded-pill">CNN</span>
+            </li>
+            <li
+              class="list-group-item justify-content-between align-items-center d-flex specs-item"
             >
               Model
               <span class="badge bg-danger rounded-pill">sequential</span>
             </li>
             <li
-              class="list-group-item justify-content-between align-items-center d-flex"
+              class="list-group-item justify-content-between align-items-center d-flex specs-item"
             >
               Total Params
               <span class="badge bg-danger rounded-pill">84.647</span>
             </li>
             <li
-              class="list-group-item justify-content-between align-items-center d-flex"
+              class="list-group-item justify-content-between align-items-center d-flex specs-item"
             >
               Trainable Params
               <span class="badge bg-danger rounded-pill">84.455</span>
             </li>
             <li
-              class="list-group-item justify-content-between align-items-center d-flex"
+              class="list-group-item justify-content-between align-items-center d-flex specs-item"
             >
               Non-trainable Params
               <span class="badge bg-danger rounded-pill">192</span>
             </li>
           </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-5">
+      <p class="fs-4 fw-bold text-center">How to Use</p>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <ol class="list-group list-group-numbered list-group-flush">
+            <li class="list-group-item use-item">Go to "Machine Model" page</li>
+            <li class="list-group-item use-item">
+              Run preprocessing, training, and testing on that page
+            </li>
+            <li class="list-group-item use-item">
+              Analyis the output if necessary
+            </li>
+            <li class="list-group-item use-item">Go to "Checking" page</li>
+            <li class="list-group-item use-item">
+              Recognize/classify your speech emotion, follow the instructions
+              there
+            </li>
+            <li class="list-group-item use-item">Enjoy!</li>
+          </ol>
         </div>
       </div>
     </section>
