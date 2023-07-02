@@ -13,7 +13,7 @@ def start_home():
     # open the html home page to be rendered
     render_page = open("view/index.html")
     # render the html home
-    components.html(render_page.read(), height = 1940)
+    components.html(render_page.read(), height = 2000)
 
     # create pages (home, machine modeling and checking)
     show_pages(
