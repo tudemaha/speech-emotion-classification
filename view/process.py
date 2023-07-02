@@ -154,3 +154,5 @@ if st.session_state["train"]:
 if st.session_state["test"]:
     # start testing process
     start_test()
+
+# code by @tudemaha

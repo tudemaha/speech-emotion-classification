@@ -70,3 +70,5 @@ def create_resized_mfcc(mfccs):
 
     # return the resized mfccs and the average of mfccs column
     return new_mfccs, averate_column
+
+# code by @tudemaha

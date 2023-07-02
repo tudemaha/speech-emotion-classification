@@ -23,3 +23,5 @@ def start_home():
             Page("view/user.py", "Checking", ":sound:")
         ]
     )
+
+# code by @tudemaha
