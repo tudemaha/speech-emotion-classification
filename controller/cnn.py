@@ -22,7 +22,6 @@ def train(x_tr, y_tr, x_va, y_va):
         callbacks = [earlystopping_cb]
     )
 
-    st.session_state["model"] = model
     return model, history
 
 def test(model, x_te, y_te):

@@ -1,6 +1,9 @@
+# import streamlit module
 import streamlit as st
 
+# get config function to start page config (for each page)
 def get_config(page_title):
+    # set app layout, set page title (on tab), set menu items in "about" section
     title = "Speech Clasification Using Neural Network"
     st.set_page_config(layout='wide', page_title=f"{page_title} | {title}", menu_items={
             'About': f"""
