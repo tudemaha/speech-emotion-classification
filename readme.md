@@ -35,5 +35,7 @@
 2. Ni Kadek Trisnawati [2108561026 / [GitHub](https://github.com/NiKadekTrisnawati) / [Instagram](https://instagram.com/trisnaadekk)]
 3. I Komang Sutrisna Eka Wijaya [2108561032 / [GitHub](https://github.com/ekasutrisna) / [Instagram](https://instagram.com/sutrisna14)]
 
-Don't forget to give a star guys!  
+Please feel free to clone, fork, or make a pull request :smile:
+
+Don't forget to give a star guys! :star:  
 [![Star on GitHub](https://img.shields.io/github/stars/tudemaha/speech-emotion-classification.svg?style=social)](https://github.com/tudemaha/speech-emotion-classification)
