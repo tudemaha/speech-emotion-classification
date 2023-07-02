@@ -31,7 +31,7 @@
 
 ### Contributors
 
-1. I Putu Gede Mahardika Adi Putra [2108561055 / [GitHub](https://github.com/tudemaha) / [Instagram](https://github.com/tudemaha)]
+1. I Putu Gede Mahardika Adi Putra [2108561055 / [GitHub](https://github.com/tudemaha) / [Instagram](https://instagram.com/tudemaha)]
 2. Ni Kadek Trisnawati [2108561026 / [GitHub](https://github.com/NiKadekTrisnawati) / [Instagram](https://instagram.com/trisnaadekk)]
 3. I Komang Sutrisna Eka Wijaya [2108561032 / [GitHub](https://github.com/ekasutrisna) / [Instagram](https://instagram.com/sutrisna14)]
 
