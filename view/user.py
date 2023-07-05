@@ -6,6 +6,8 @@ from pandas import DataFrame
 from controller.checking import checking
 from view.config import get_config
 
+if "test" not in st.session_state: st.session_state["test"] = False
+
 # get config function to start page config (for each page)
 get_config("Checking")
 

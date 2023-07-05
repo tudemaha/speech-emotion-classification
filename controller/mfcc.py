@@ -36,11 +36,11 @@ def create_audio_mfcc(librosa_audio):
 # function to resize the mfccs
 @st.cache_resource
 def resize_mfcc(array):
-    # create empty array with shape (30, 80)
+    # create empty array with shape (30, 110)
     new_mfcc = np.zeros((30, 110))
     # loop through the array and copy the value to the new array
-    # if the mfcc length less than 80, the rest of the array will be filled with 0
-    # if the mfcc length more than 80, the rest of the array will be ignored
+    # if the mfcc length less than 110, the rest of the array will be filled with 0
+    # if the mfcc length more than 110, the rest of the array will be ignored
     for i in range(30):
         for j in range(110):
             try:
