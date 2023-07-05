@@ -7,7 +7,7 @@ def load(uploaded_files):
     audio_librosa = []
     # load the audio data from uploaded files then append it to the list
     for uploaded_file in uploaded_files:
-        audio, _ = librosa.load(uploaded_file, sr = 16000)
+        audio, _ = librosa.load(uploaded_file, sr = 22550)
         audio_librosa.append(audio)
 
     # return the list

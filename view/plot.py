@@ -35,7 +35,7 @@ def show_random_plot(df):
     index = random.randint(0, df.shape[0])
 
     # load the audio file based on the path
-    y, sr = librosa.load(df.Path[index], sr = 16000)
+    y, sr = librosa.load(df.Path[index], sr = 22550)
 
     # plot the waveform
     librosa.display.waveshow(y, sr = sr, ax = ax[0])
@@ -69,7 +69,7 @@ def show_mfcc(df_mfcc_path, array_mfcc):
     fig, ax = plt.subplots(nrows = 1, ncols =  2, figsize = (20, 4))
 
     # load the audio file based on the path
-    y, sr = librosa.load(df_mfcc_path, sr = 16000)
+    y, sr = librosa.load(df_mfcc_path, sr = 22550)
     # plot the mfcc before augmentation
     x_mfcc = librosa.feature.mfcc(y = y, sr = sr, n_mfcc = 30)
     librosa.display.specshow(x_mfcc, sr = sr, x_axis = "time", norm = Normalize(vmin = -50, vmax = 50), ax = ax[0])
