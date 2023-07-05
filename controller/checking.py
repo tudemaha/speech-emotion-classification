@@ -26,7 +26,7 @@ def checking(uploaded_files):
     # load the model from session state
     model = st.session_state["model"]
     # make prediction from the model
-    pred = make_prediction(model, new_mfccs)
+    raw, pred = make_prediction(model, new_mfccs)
 
     # return the prediction
-    return pred
+    return raw, pred

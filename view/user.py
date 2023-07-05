@@ -43,7 +43,7 @@ def start():
             # show the predicton result
             st.write("#### Predicted Emotions")
             # start prediction process
-            pred = checking(uploaded_files)
+            raw, pred = checking(uploaded_files)
             # show the result (if sad show snow, if happy show balloons)
             if 0 in pred: st.snow()
             if 1 in pred: st.balloons()
@@ -54,10 +54,10 @@ def start():
             result = []
             # append the result to the list with their filename and predicted emotion's emoji
             for i, p in enumerate(pred):
-                result.append((uploaded_files[i].name, emoji[str(p)]))
+                result.append((uploaded_files[i].name, emoji[str(p)], "{:.2f}%".format(raw[i][p] * 100)))
             
             # show the result in dataframe
-            result_df = DataFrame(result, columns = ["Filename", "Emotion"])
+            result_df = DataFrame(result, columns = ["Filename", "Emotion", "Persentage"])
             st.dataframe(result_df, 400)
 
 # if the traing process has not been done

@@ -53,12 +53,12 @@ def make_prediction(model, x_te):
         pred.append(np.argmax(i))
     
     # return the prediction
-    return pred
+    return predictions, pred
 
 # function to predict the test set
 def predict(model, x_te, y_te):
     # make prediction
-    pred = make_prediction(model, x_te)
+    _, pred = make_prediction(model, x_te)
     # calculate the precision, recall, and f1 score
     precision = precision_score(y_te, pred, average = "weighted")
     recall = recall_score(y_te, pred, average = "weighted")
