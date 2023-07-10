@@ -6,8 +6,6 @@ from pandas import DataFrame
 from controller.checking import checking
 from view.config import get_config
 
-if "test" not in st.session_state: st.session_state["test"] = False
-
 # get config function to start page config (for each page)
 get_config("Checking")
 
@@ -61,18 +59,5 @@ def start():
             # show the result in dataframe
             result_df = DataFrame(result, columns = ["Filename", "Emotion", "Persentage"])
             st.dataframe(result_df, 400)
-
-# if the traing process has not been done
-def show_warning():
-    # show warning message for user to go to machine modeling page
-    st.warning("Model not created yet! Go to \"Machine Modeling\" page, do preprocessing, training, and testing.", icon = "⚠️")
-
-# check if the model has been tested
-if st.session_state["test"]:
-    # start the checking page
-    start()
-else:
-    # show warning message
-    show_warning()
 
 # code by @tudemaha

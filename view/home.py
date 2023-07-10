@@ -19,7 +19,6 @@ def start_home():
     show_pages(
         [
             Page("main.py", "Home", ":house:"),
-            Page("view/process.py", "Machine Modeling", ":gear:"),
             Page("view/user.py", "Checking", ":sound:")
         ]
     )
